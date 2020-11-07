@@ -19,13 +19,16 @@ def index(page_name=None):
 def submit(page_name=None):
     if request.method == 'POST':
         data = request.form.to_dict()
-        email = data['email']
-        subject = data['subject']
+        name = data['name']
         message = data['message']
 
         with open("database.csv", "a", newline='') as file:
             csv_writer = csv.writer(file)
-            csv_writer.writerow([email, subject, message])
+            csv_writer.writerow([name, message])
+
+        with open("database.txt", "a") as file:
+            file.write("\n"+name+"\t"+message)
+
 
     else:
         print("This is not post request")
